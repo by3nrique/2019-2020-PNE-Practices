@@ -1,5 +1,4 @@
 print('This is my first program in pycharm')
 print('Hello world!!!')
-# This is my first program
+# Session 1
 print("I am printing a new line")
-print("I prefer Jupyter Notebook rather than Pycharm")
