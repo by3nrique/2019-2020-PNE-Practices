@@ -43,4 +43,4 @@ def seq_complement(seq):
             if i == base:
                 complementary += bases_co
 
-    return(complementary)
+    return complementary
