@@ -1,3 +1,5 @@
+import pathlib
+
 class Seq:
     """A class for representing sequence objects"""
 
@@ -63,3 +65,10 @@ class Seq:
                     if i == base:
                         complementary += bases_co
             return complementary
+
+    def read_fasta(self, filename):
+        # -- Open and read the file
+        file_contents = pathlib.Path(filename).read_text().split("\n")[1:]
+        body = "".join(file_contents)
+        self.strbases = body
+        self.length = len(self.strbases)
