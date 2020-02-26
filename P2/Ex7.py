@@ -32,7 +32,6 @@ fragments = [fragment1, fragment2, fragment3, fragment4, fragment5, fragment6,
 
 i = 0
 f = 0
-loop = True
 while f < len(fragments):
     sequence = str(s)
     fragments[f] += sequence[i]
