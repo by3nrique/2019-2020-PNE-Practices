@@ -1,16 +1,46 @@
 import socket
 
-# SERVER IP, PORT
-PORT = 8080
-IP = "192.168.124.179"
+# Configure the Server's IP and PORT
+PORT = 8081
+IP = "10.3.35.198"
+MAX_OPEN_REQUESTS = 5
 
-while True:
-  # -- Ask the user for the message
+# Counting the number of connections
+number_con = 0
 
-  # -- Create the socket
+# create an INET, STREAMing socket
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+try:
+    serversocket.bind((IP, PORT))
+    # become a server socket
+    # MAX_OPEN_REQUESTS connect requests before refusing outside connections
+    serversocket.listen(MAX_OPEN_REQUESTS)
 
-  # -- Establish the connection to the Server
+    while True:
+        # accept connections from outside
+        print("Waiting for connections at {}, {} ".format(IP, PORT))
+        (clientsocket, address) = serversocket.accept()
 
-  # -- Send the user message
+        # Another connection!e
+        number_con += 1
 
-  # -- Close the socket
+        # Print the conection number
+        print("CONNECTION: {}. From the IP: {}".format(number_con, address))
+
+        # Read the message from the client, if any
+        msg = clientsocket.recv(2048).decode("utf-8")
+        print("Message from client: {}".format(msg))
+
+        # Send the messag
+        message = "Hello from the teacher's server"
+        send_bytes = str.encode(message)
+        # We must write bytes, not a string
+        clientsocket.send(send_bytes)
+        clientsocket.close()
+
+except socket.error:
+    print("Problems using port {}. Do you have permission?".format(PORT))
+
+except KeyboardInterrupt:
+    print("Server stopped by the user")
+    serversocket.close()
