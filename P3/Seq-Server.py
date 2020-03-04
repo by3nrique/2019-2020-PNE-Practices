@@ -40,7 +40,6 @@ while True:
         exit()
 
     else:
-        print("A client has connected to the server!")
 
         # -- Read the message from the client
         # -- The received message is in raw bytes
@@ -49,12 +48,11 @@ while True:
         # -- We decode it for converting it
         # -- into a human-redeable string
         msg = msg_raw.decode()
-
-
         argument_command = msg[msg.find(" ") + 1:]
+        response = "ERROR"
 
         # PING command
-        if msg == "PING":
+        if "PING" in msg:
             response = "OK!\n"
 
         # GET command
@@ -64,15 +62,15 @@ while True:
         # INFO command
         elif "INFO" in msg:
             seq_info = Seq(argument_command)
-            count_bases = ""
+            count_bases_string = ""
             for base, count in seq_info.count().items():
-                s_base = str(base) + ": " + str(count) + " (" + str(round(count / seq_info.len() * 100,2)) + "%)" + "\n"
-                count_bases += s_base
+                s_base = str(base) + ": " + str(count) + " (" + str(
+                    round(count / seq_info.len() * 100, 2)) + "%)" + "\n"
+                count_bases_string += s_base
 
             response = ("Sequence: " + str(seq_info) + "\n" +
                         "Total length: " + str(seq_info.len()) + "\n" +
-                        count_bases)
-
+                        count_bases_string)
 
         elif "COMP" in msg:
             seq_comp = Seq(argument_command)
@@ -81,7 +79,6 @@ while True:
         elif "REV" in msg:
             seq_rev = Seq(argument_command)
             response = seq_rev.reverse() + "\n"
-
 
         elif "GENE" in msg:
             gene = argument_command
