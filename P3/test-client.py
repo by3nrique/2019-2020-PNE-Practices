@@ -12,6 +12,7 @@ PORT = 8080
 # -- Create a client object
 c = Client(IP, PORT)
 sequence_test = "ACCTCCTCTCCAGCAATGCCAACCCCAGTCCAGGCCCCCATCCGCCCAGGATCTCGATCA"
+
 print("Connection to SERVER at", IP, ", PORT: ", PORT)
 
 # TEST PING
