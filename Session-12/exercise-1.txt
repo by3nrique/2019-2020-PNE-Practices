@@ -1,0 +1,15 @@
+
+http://127.0.0.1:8080/hello
+GET /hello HTTP/1.1
+/hello
+
+http://127.0.0.1:8080/file.html
+GET /file.html HTTP/1.1
+/file.html
+
+http://127.0.0.1:8080/hi/there?name=virus&type=corona
+GET /hi/there?name=virus&type=corona HTTP/1.1
+
+What should be the URL that we have to write in the Browser for accessing the /dna/u5 resource?
+http://127.0.0.1:8080/dna/ua
+GET /dna/ua HTTP/1.1
