@@ -5,11 +5,9 @@ import termcolor
 # -- Server network parameters
 IP = "127.0.0.1"
 PORT = 8080
-FOLDER = "../P4/"
-FILENAME = "A.html"
 
 
-def read_fasta(filename):
+def read(filename):
     # -- Open and read the file
     file_contents = pathlib.Path(filename).read_text().split("\n")[1:]
     body = "".join(file_contents)
@@ -39,10 +37,14 @@ def process_client(s):
     # blank line
     # Body (content to send)
 
-    if "/info/A" in req_line:
-        body = read_fasta(FOLDER + FILENAME)
+    FOLDER = "../P4/"
+    FILENAME = "A.html"
+
+    if "/info/A" in req_line:  # req_line is GET /info/A HTTP/1.1
+        body = read(FOLDER + FILENAME)  # read() is the function read_fasta_data() from other practice
     else:
         body = ""
+
     # This new contents are written in HTML language
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"

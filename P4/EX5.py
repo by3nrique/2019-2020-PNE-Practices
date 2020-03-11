@@ -7,7 +7,7 @@ IP = "127.0.0.1"
 PORT = 8080
 
 
-def read_fasta(filename):
+def read(filename):
     # -- Open and read the file
     file_contents = pathlib.Path(filename).read_text().split("\n")[1:]
     body = "".join(file_contents)
@@ -38,22 +38,21 @@ def process_client(s):
     # Body (content to send)
 
     FOLDER = "../P4/"
-    if "/info/A" in req_line:
+    file_request = req_line.split()[1]
+    # file_request is like req_line (GET /info/A HTTP/1.1) only with (/info/A) or  (/info/C)
+
+    if "/info/A" in file_request:
         FILENAME = "A.html"
-        body = read_fasta(FOLDER + FILENAME)
-    elif "/info/C" in req_line:
+    elif "/info/C" in file_request:
         FILENAME = "C.html"
-        body = read_fasta(FOLDER + FILENAME)
-    elif "/info/G" in req_line:
+    elif "/info/G" in file_request:
         FILENAME = "G.html"
-        body = read_fasta(FOLDER + FILENAME)
-    elif "/info/T" in req_line:
+    elif "/info/T" in file_request:
         FILENAME = "T.html"
-        body = read_fasta(FOLDER + FILENAME)
     else:
         FILENAME = "error.html"
-        body = read_fasta(FOLDER + FILENAME)
-        
+
+    body = read(FOLDER + FILENAME)
     # This new contents are written in HTML language
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
