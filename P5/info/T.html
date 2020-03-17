@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      <head>
+        <meta charset="utf-8">
+        <title>Thymine</title>
+      </head>
+      <body style="background-color: pink;">
+        <h1>THYMINE</h1>
+        <p>Letter: T</p>
+        <p>Chemical formula: C5H6N202</p>
+        <a href="https://en.wikipedia.org/wiki/Thymine">More Info </a>
+        <p></p>
+        <a href="http://127.0.0.1:8080/">Main Page </a>
+      </body>
+    </html>
