@@ -43,38 +43,32 @@ gene = input('Write the gene name:')
 
 server = 'rest.ensembl.org'
 endpoint = '/sequence/id/'
-params = GENES[gene] + '?content-type=application/json'
+options = GENES[gene] + '?content-type=application/json'
 method = "GET"
-URL = server + endpoint + params
+URL = server + endpoint + options
 
 print(f"\nConnecting to server: {server}")
 print(f"URL : {URL}")
 
-# Connect with the server
-conn = http.client.HTTPConnection(server)
+# Connect w the server
+connection = http.client.HTTPConnection(server)
 
-# -- Send the request message, using the GET method. We are
-# -- requesting the main page (/)
 try:
-    conn.request(method, endpoint + params)
+    connection.request(method, endpoint + options)
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")
     exit()
 
-# -- Read the response message from the server
-r1 = conn.getresponse()
+# response and status
+response = connection.getresponse()
+print(f"Response received!: {response.status} {response.reason}\n")
 
-# -- Print the status line
-print(f"Response received!: {r1.status} {r1.reason}\n")
+data = response.read().decode("utf-8")
+# read JSON
+info_api = json.loads(data)
 
-# -- Read the response's body
-data1 = r1.read().decode("utf-8")
+# information
 
-# -- Create a variable with the data,
-# -- form the JSON received
-info_api = json.loads(data1)
-
-# Obtain the information from the JSON file
 sequence = (info_api['seq'])
 description = info_api['desc']
 
