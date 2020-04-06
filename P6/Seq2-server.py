@@ -9,14 +9,14 @@ PORT = 8080
 
 
 def html_response(title="", body=""):
-    default_body = """
+    default_body = f"""
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>RESULT</title>
+    <title>{title}</title>
   </head>
-  <body>
+  <body>{body}
     </body>
     <body>
     <a href="http://127.0.0.1:8080/">Main Page </a>
@@ -24,9 +24,6 @@ def html_response(title="", body=""):
 </html>
 """
 
-    default_body = default_body[0:default_body.find("<title>") + 7] + title + default_body[
-                                                                              default_body.find("</title>"):]
-    default_body = default_body[0:default_body.find("<body>") + 6] + body + default_body[default_body.find("</body>"):]
     return default_body
 
 
@@ -93,6 +90,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             error = 200
 
         elif "/operation" in self.path:
+
             requests = self.path.split("&")
             sequence = argument_command(requests[0])
             op = argument_command(requests[1])
