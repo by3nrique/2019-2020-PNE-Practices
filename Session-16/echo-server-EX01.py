@@ -21,7 +21,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
 
-        body = """
+        body = f"""
         <!DOCTYPE html>
         <html lang="en" dir="ltr">
           <head>
@@ -35,14 +35,18 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
           </body>
         </html>
         """
-
-        if self.path == "/" :
+        if self.path == "/":
             file = "form-EX01.html"
             contents = Path(file).read_text()
             self.send_response(200)  # -- Status line: OK!
 
-        elif "/echo" == self.path[0:5]:
-            msg = self.path[10:]
+        # self.path = /echo?msg=hola HTTP/1.1
+        # self.path[:self.path.find("?")] gets all the characters of the string until "?" so  , "/echo"
+        # self.path[self.path.find("=") + 1:] returns the characters from "=" to the end so , "hola"
+
+        elif "/echo" == self.path[:self.path.find("?")]:
+            msg = self.path[self.path.find("=") + 1:]
+
             contents = body[0:body.find("<p>") + 3] + msg + body[body.find("</p>"):]
             self.send_response(200)  # -- Status line: OK!
 

@@ -44,7 +44,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             self.send_response(200)  # -- Status line: OK!
 
-        elif "/echo" == self.path[0:5]:
+        # self.path = /echo?msg=hola&chk=on HTTP/1.1
+        # self.path[:self.path.find("?")] gets all the characters of the string until "?" so  , "/echo"
+
+        # chk = self.path[self.path.find("chk") + 4:] returns after "chk="  on
+
+        elif "/echo" == self.path[:self.path.find("?")]:
 
             chk = self.path[self.path.find("chk") + 4:]
 
