@@ -1,13 +1,16 @@
+# This functions return the Nth term of de fibonacci sequence
 def fibonacci(n):
     a = 0
     b = 1
-    total = 0
-    for e in range(0, n):
-        total = (b + a)
+    c = 0
+    for count in range(0, n):  # Range includes every number from 1 to n
+        c = (b + a)
         b = a
-        a = total
-    return (total)
+        a = c
+    return c
 
+
+# -- Print the calculations
 
 print("5th Fibonacci term:", fibonacci(5))
 print("10th Fibonacci term:", fibonacci(10))
