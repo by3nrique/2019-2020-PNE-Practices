@@ -1,11 +1,12 @@
+# Import the required libraries
 import http.client
 import json
 import termcolor as tc
-from Seq1 import Seq
+from Seq1 import Seq  # Import Seq from P1
 
 
-def sequence_information(bases):
-    seq_info = Seq(bases)
+def sequence_information(bases):  # This function returns information about a sequence
+    seq_info = Seq(bases)  # Use de Seq() class here
     min_count = 0
     most_frecuent_base = ""
 
@@ -14,7 +15,7 @@ def sequence_information(bases):
 
     for base, count in seq_info.count().items():
         # .items() returns the base and the count for each base , then we print
-        percentage = round(count / seq_info.len() * 100, 2)
+        percentage = round(count / seq_info.len() * 100, 2)  # round(,2) only shows to decimal numbers
         tc.cprint(f"{base}:", 'blue', end=' ')
         print(f" {count} ({percentage}%)")
 
@@ -39,36 +40,37 @@ GENES = dict(FRAT1='ENSG00000165879',  # defining the dictionary
              KDR='ENSG00000128052',
              ANK2='ENSG00000145362')
 
-for gene in GENES:
+for gene in GENES:  # Go though every gene in list GENES
 
-    server = 'rest.ensembl.org'
-    endpoint = '/sequence/id/'
-    options = GENES[gene] + '?content-type=application/json'
-    method = "GET"
+    server = 'rest.ensembl.org'  # Server address
+    endpoint = '/sequence/id/' + GENES[gene]  # This endpoint returns a sequence
+    options = '?content-type=application/json'  # We will get json information
+    method = "GET"  # We will only use the GET method
     URL = server + endpoint + options
 
-    print(f"\nConnecting to server: {server}")
-    print(f"URL : {URL}")
+    # Print the connection information
+    tc.cprint(f"\nConnecting to server: {server}", 'blue')
+    tc.cprint(f"URL : {URL}", 'blue')
 
     # Connect w the server
     connection = http.client.HTTPConnection(server)
-
     try:
         connection.request(method, endpoint + options)
-    except ConnectionRefusedError:
+    except ConnectionRefusedError:  # If the connection fail we print an error message
         print("ERROR! Cannot connect to the Server")
         exit()
 
     # response and status
     response = connection.getresponse()
-    print(f"Response received!: {response.status} {response.reason}\n")
+    # .getresponse() method that returns the response information from the server
 
-    data = response.read().decode("utf-8")
+    tc.cprint(f"Response received!: {response.status} {response.reason}\n", 'blue')
+
+    data = response.read().decode("utf-8")  # It is necessary to decode the information
     # read JSON
-    info_api = json.loads(data)
+    info_api = json.loads(data)  # loads(). is a method from JSON library (read JSON response)
 
-    # information
-
+    # information  We use 'seq' and 'desc' as keys
     sequence = (info_api['seq'])
     description = info_api['desc']
 
