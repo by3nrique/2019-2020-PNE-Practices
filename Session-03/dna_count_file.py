@@ -1,30 +1,30 @@
-import pathlib
+import pathlib  # Import pathLib
 
-# -- Constant with the new of the file to open
+# The filename to open
 FILENAME = "DNA.txt"
 
-# -- Open and read the file
-file_contents = pathlib.Path(FILENAME).read_text().split("\n")[1:]
-dna_sequence = "".join(file_contents)
+# open and read the file
+file_contents = pathlib.Path(FILENAME).read_text().split("\n")[1:]  # Split lines and skip the first one [1:]
+dna_sequence = "".join(file_contents)  # Join all the list in the same string without spaces
 
 
-def count(dna_seq):
-    a = 0
-    g = 0
-    t = 0
-    c = 0
+def count(dna_seq):  # This function counts the number of bases
+    A = 0
+    G = 0
+    T = 0
+    C = 0
     for base in dna_seq:
         if base == "A":
-            a += 1
+            A += 1  # When there is an "A" we add 1 to the counter A
         elif base == "G":
-            g += 1
+            G += 1
         elif base == "T":
-            t += 1
+            T += 1
         elif base == "C":
-            c += 1
-    return a, c, t, g
+            C += 1
+    return A, C, T, G
 
 
-print("Total length is: ", len(dna_sequence))
+print("Total length is: ", len(dna_sequence))  # Print the length of the sequence
 print("A: ", count(dna_sequence)[0], "C: ", count(dna_sequence)[1], "T:", count(dna_sequence)[2], "G: ",
       count(dna_sequence)[3])

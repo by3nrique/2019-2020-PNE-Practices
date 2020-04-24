@@ -1,21 +1,21 @@
-dna_sequence = input("Introduce the sequence: ")
+dna_sequence = input("Introduce the sequence: ")  # The user enters the sequence directly
 
 
 def count(dna_seq):
-    a = 0
-    g = 0
-    t = 0
-    c = 0
+    A = 0
+    G = 0
+    T = 0
+    C = 0
     for base in dna_seq:
         if base == "A":
-            a += 1
+            A += 1  # When there is an "A" we add 1 to the counter A
         elif base == "G":
-            g += 1
+            G += 1
         elif base == "T":
-            t += 1
+            T += 1
         elif base == "C":
-            c += 1
-    return a, c, t, g
+            C += 1
+    return A, C, T, G
 
 
 print("Total length is: ", len(dna_sequence))
