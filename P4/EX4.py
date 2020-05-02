@@ -1,89 +1,78 @@
+# Import the libaries
 import pathlib
 import socket
 import termcolor
 
-# -- Server network parameters
+# Server Information
 IP = "127.0.0.1"
 PORT = 8080
 
 
-def read_fasta(filename):
-    # -- Open and read the file
-    file_contents = pathlib.Path(filename).read_text().split("\n")[1:]
-    body = "".join(file_contents)
+def read(FILENAME):  # read() is the function read_fasta_data() from other practice
+    # open and read the file
+    file_contents = pathlib.Path(FILENAME).read_text().split("\n")[1:]  # Split lines and skip the first one [1:]
+    body = "".join(file_contents)  # Join all the list in the same string without spaces
     return body
 
 
 def process_client(s):
-    # -- Receive the request message
+    # Receive the message
     req_raw = s.recv(2000)
-    req = req_raw.decode()
+    request_received = req_raw.decode()
 
-    print("Message FROM CLIENT: ")
+    print("Message from CLIENT: ")
 
-    # -- Split the request messages into lines
-    lines = req.split('\n')
-
-    # -- The request line is the first
-    req_line = lines[0]
+    lines = request_received.split('\n')  # Split the request
+    first_line = lines[0]  # first LINE of the request
 
     print("Request line: ", end="")
-    termcolor.cprint(req_line, "green")
+    termcolor.cprint(first_line, "green")
 
-    # -- Generate the response message
-    # It has the following lines
-    # Status line
-    # header
-    # blank line
-    # Body (content to send)
-
+    # Response message
     FOLDER = "../P4/"
-    file_request = req_line.split()[1]
+
+    file_request = first_line.split(" ")[1]
     # file_request is like req_line (GET /info/A HTTP/1.1) only with (/info/A) or  (/info/C)
 
-    if "/info/A" in file_request:
+    if "/info/A" == file_request:
         FILENAME = "A.html"
-        body = read_fasta(FOLDER + FILENAME)
-    elif "/info/C" in file_request:
+        body = read(FOLDER + FILENAME)
+    elif "/info/C" == file_request:
         FILENAME = "C.html"
-        body = read_fasta(FOLDER + FILENAME)
-    elif "/info/G" in file_request:
+        body = read(FOLDER + FILENAME)
+    elif "/info/G" == file_request:
         FILENAME = "G.html"
-        body = read_fasta(FOLDER + FILENAME)
-    elif "/info/T" in file_request:
+        body = read(FOLDER + FILENAME)
+    elif "/info/T" == file_request:
         FILENAME = "T.html"
-        body = read_fasta(FOLDER + FILENAME)
+        body = read(FOLDER + FILENAME)
     else:
         body = ""
 
     # This new contents are written in HTML language
-    # -- Status line: We respond that everything is ok (200 code)
-    status_line = "HTTP/1.1 200 OK\n"
+    # Status line
+    status_line = "HTTP/1.1 200 OK\n"  # everything is ok (200 code)
 
-    # -- Add the Content-Type header
+    # Content-Type header and Content-Length
     header = "Content-Type: text/html\n"
-
-    # -- Add the Content-Length
     header += f"Content-Length: {len(body)}\n"
 
-    # -- Build the message by joining together all the parts
-    response_msg = status_line + header + "\n" + body
-    cs.send(response_msg.encode())
+    # Join all the parts
+    response = status_line + header + "\n" + body  # Join the status_line , header and body
+    cs.send(response.encode())  # send the response
 
 
-# -------------- MAIN PROGRAM
-# ------ Configure the server
-# -- Listening socket
-ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# Server
+# Listening socket
+lsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# -- Optional: This is for avoiding the problem of Port already in use
-ls.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+# Preventing the error: "Port already in use"
+lsocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-# -- Setup up the socket's IP and PORT
-ls.bind((IP, PORT))
+lsocket.bind((IP, PORT))  # Socket's IP and PORT with .bind() method
 
 # -- Become a listening socket
-ls.listen()
+lsocket.listen()
 
 print("SEQ Server configured!")
 
@@ -91,15 +80,15 @@ print("SEQ Server configured!")
 while True:
     print("Waiting for clients....")
     try:
-        (cs, client_ip_port) = ls.accept()
+        (cs, client_ip_port) = lsocket.accept()
     except KeyboardInterrupt:
         print("Server Stopped!")
-        ls.close()
+        lsocket.close()
         exit()
     else:
 
         # Service the client
-        process_client(cs)
+        process_client(cs)  # This is the function created above
 
-        # -- Close the socket
+        # Close
         cs.close()
