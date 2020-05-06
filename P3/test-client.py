@@ -5,7 +5,7 @@ EXERCISE = 7
 
 print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 
-# -- Parameters
+# Parameters for the server
 IP = "127.0.0.1"
 PORT = 8080
 

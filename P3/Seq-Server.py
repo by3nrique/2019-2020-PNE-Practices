@@ -1,68 +1,66 @@
+# Import the necessary
 from Seq1 import Seq
 import socket
 import termcolor
 
-# Configure the Server's IP and PORT
+# IP and PORT
 PORT = 8080
 IP = "127.0.0.1"
+
+# This is list with example sequences
 
 seq_list = ["TGTGAACATTCTGCACAGGTCTCTGGCTGCGCCTGGGCGGGTTTCTT", "CAGGAGGGGACTGTCTGTGTTCTCCCTCCCTCCGAGCTCCAGCCTTC",
             "CTCCCAGCTCCCTGGAGTCTCTCACGTAGAATGTCCTCTCCACCCC", "GAACTCCTGCAGGTTCTGCAGGCCACGGCTGGCCCCCCTCGAAAGT",
             "CTGCAGGGGGACGCTTGAAAGTTGCTGGAGGAGCCGGGGGGAA"]
 
-# -- Step 1: create the socket
-ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# Server
+# Listening socket
+lsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# -- Optional: This is for avoiding the problem of Port already in use
-ls.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+# Preventing the error: "Port already in use"
+lsocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-# -- Step 2: Bind the socket to server's IP and PORT
-ls.bind((IP, PORT))
+lsocket.bind((IP, PORT))  # Socket's IP and PORT with .bind() method
 
-# -- Step 3: Configure the socket for listening
-ls.listen()
+# -- Become a listening socket
+lsocket.listen()
 
+# --- MAIN LOOP
 while True:
-    # -- Waits for a client to connect
-    print("Waiting for Clients to connect")
-
+    print("Waiting for clients....")
     try:
-        (cs, client_ip_port) = ls.accept()
-
-    # -- Server stopped manually
+        (cs, client_ip_port) = lsocket.accept()
     except KeyboardInterrupt:
-        print("Server stopped by the user")
-
-        # -- Close the listenning socket
-        ls.close()
-
-        # -- Exit!
+        print("Server Stopped!")
+        lsocket.close()
         exit()
 
     else:
-
-        # -- Read the message from the client
-        # -- The received message is in raw bytes
+        # Receive the message
         msg_raw = cs.recv(2048)
-
-        # -- We decode it for converting it
-        # -- into a human-redeable string
         msg = msg_raw.decode()
-        argument_command = msg[msg.find(" ") + 1:]
-        response = "ERROR"
+
+        try:
+            msg_info = msg.split(" ")  # split the msg "GET 1" into ["GET","1"]
+            service = msg_info[0]  # For example GET
+            argument = msg_info[1]  # 1 , 2
+
+        except IndexError:
+            service = msg
 
         # PING command
-        if "PING" in msg:
-            response = "OK!\n"
+        if "PING" == service:
+            response = "OK!\n"  # Return response OK!!
 
         # GET command
-        elif "GET" in msg:
-            response = seq_list[int(argument_command)]
+        elif "GET" == service:
+            response = seq_list[int(argument)]
 
         # INFO command
-        elif "INFO" in msg:
-            seq_info = Seq(argument_command)
+        elif "INFO" == service:
+            seq_info = Seq(argument)  # argument is the sequence
             count_bases_string = ""
+
             for base, count in seq_info.count().items():
                 s_base = str(base) + ": " + str(count) + " (" + str(
                     round(count / seq_info.len() * 100, 2)) + "%)" + "\n"
@@ -72,27 +70,27 @@ while True:
                         "Total length: " + str(seq_info.len()) + "\n" +
                         count_bases_string)
 
-        elif "COMP" in msg:
-            seq_comp = Seq(argument_command)
+        elif "COMP" == service:
+            seq_comp = Seq(argument)
             response = seq_comp.complement() + "\n"
 
-        elif "REV" in msg:
-            seq_rev = Seq(argument_command)
+        elif "REV" == service:
+            seq_rev = Seq(argument)
             response = seq_rev.reverse() + "\n"
 
-        elif "GENE" in msg:
-            gene = argument_command
+        elif "GENE" == service:
+            gene = argument
             s = Seq()
             s.read_fasta("../Session-04/" + gene + ".txt")
             response = str(s) + "\n"
 
-        # -- The message has to be encoded into bytes
         # Server Console
 
-        termcolor.cprint(msg[:msg.find(" ")], "green")
+        termcolor.cprint(f'{service} command!', "green")
         print(response)
 
         # Client console
-        cs.send(response.encode())
-        # -- Close the data socket
+
+        cs.send(response.encode())  # Encode the message and send message
+        # Close
         cs.close()
