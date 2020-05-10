@@ -4,24 +4,25 @@ import pathlib
 class Seq:
     """A class for representing sequence objects"""
 
-    def __init__(self, strbases="NULL"):
+    def __init__(self, strbases="NULL"):  # by default the Seq object is NULL
         if strbases == "NULL":
             print("NULL Seq Created")
             self.strbases = "NULL"
-            self.length = 0
+            self.length = 0  # If the sequence is null the length is = 0
         else:
-            v = True
+            valid = True
             i = 0
-            while i < len(strbases) and v:
+            while i < len(strbases) and valid:
+                # Look for incorrect bases
                 if (strbases[i] != "A") and (strbases[i] != "C") and (strbases[i] != "G") and (strbases[i] != "T"):
-                    v = False
+                    valid = False
                     self.strbases = "ERROR"
-                    self.length = 0
-                    print("INCORRECT Sequence detected")
+                    self.length = 0  # If the sequence is not valid the length is = 0
+                    print("INVALID Seq!")
                 else:
                     i += 1
 
-            if v and strbases != "NULL":
+            if valid and strbases != "NULL":  # The sequence is valid !!
                 print("New sequence created!")
                 self.strbases = strbases
                 self.length = len(self.strbases)
@@ -59,16 +60,16 @@ class Seq:
         else:
             bases = ["A", "C", "T", "G"]
             bases_complementary = ["T", "G", "A", "C"]
-            dict_bases_complemenytary = dict(zip(bases, bases_complementary))
+            dict_bases_complementary = dict(zip(bases, bases_complementary))
             complementary = ""
             for i in self.strbases:
-                for base, bases_co in dict_bases_complemenytary.items():
+                for base, bases_co in dict_bases_complementary.items():
                     if i == base:
                         complementary += bases_co
             return complementary
 
     def read_fasta(self, filename):
         file_contents = pathlib.Path(filename).read_text().split('\n')[1:]
-        new_file = "".join(file_contents)
-        self.strbases = new_file
+        new_contents = "".join(file_contents)
+        self.strbases = new_contents
         self.length = len(self.strbases)
