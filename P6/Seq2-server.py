@@ -8,7 +8,7 @@ from Seq1 import Seq
 PORT = 8080
 
 
-def html_response(title="", body=""):
+def html_response(title="", body=""):  # Generate HTML response with JUST  title and body
     default_body = f"""
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -32,6 +32,20 @@ def argument_command(request_line):
     return argument
 
 
+def analyze_request(request_line):
+    if "?" in request_line:  # Analyse if the request is simple or with parameters
+
+        request_parts = request_line.split("?")  # Divide de request into endpoint and parameter/s
+
+        endpoint = request_parts[0]  # /ping
+
+    else:  # Simple request (no parameters) http:/localhost:8080/
+        endpoint = request_line
+
+    # return endpoint , parameters and the JSON option
+    return endpoint
+
+
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
@@ -46,8 +60,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
-
-        if self.path == "/":
+        endpoint = analyze_request(self.path)
+        if endpoint == "/":
 
             file = "form-4.html"
 
@@ -55,12 +69,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             error = 200
 
-        elif "/ping" in self.path:
+        elif "/ping" == endpoint:
             html = "<h1>PING OK!</h1><p>The SEQ2 server is running...</p>"
             contents = html_response("PING", html)
             error = 200
 
-        elif "/get" in self.path:
+        elif "/get" == endpoint:
 
             seq_list = ["TGTGAACATTCTGCACAGGTCTCTGGCTGCGCCTGGGCGGGTTTCTT",
                         "CAGGAGGGGACTGTCTGTGTTCTCCCTCCCTCCGAGCTCCAGCCTTC",
@@ -76,7 +90,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             error = 200  # -- Status line: OK!
 
-        elif "/gene" in self.path:
+        elif "/gene" == endpoint:
 
             gene = argument_command(self.path)
 
@@ -89,37 +103,39 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             error = 200
 
-        elif "/operation" in self.path:
+        elif "/operation" == endpoint:
 
             requests = self.path.split("&")
             sequence = argument_command(requests[0])
-            op = argument_command(requests[1])
+            operation = argument_command(requests[1])
 
-            if "info" == op:
-                seq_info = Seq(sequence)
+            user_seq = Seq(sequence)
+            if ("ERROR" or "NULL") in str(user_seq):
+                operation = ""
+                html_operation = "<h1>Operation:</h1>"
+                html_result = "<h1>Result:</h1>" + "<p>The sequence is not valid</p>"
+            if "info" == operation:
                 count_bases_string = ""
-                for base, count in seq_info.count().items():
+                for base, count in user_seq.count().items():
                     s_base = str(base) + ": " + str(count) + " (" + str(
-                        round(count / seq_info.len() * 100, 2)) + "%)" + "<br>"
+                        round(count / user_seq.len() * 100, 2)) + "%)" + "<br>"
                     count_bases_string += s_base
 
-                response_info = ("Sequence: " + str(seq_info) + " <br>" +
-                                 "Total length: " + str(seq_info.len()) + "<br>" +
+                response_info = ("Sequence: " + str(user_seq) + " <br>" +
+                                 "Total length: " + str(user_seq.len()) + "<br>" +
                                  count_bases_string)
 
                 html_operation = "<h1>Operation:</h1><p>Info</p>"
                 html_result = "<h1>Result:</h1>" + "<p>" + response_info + "</p>"
 
-            elif "comp" == op:
-                seq_comp = Seq(sequence)
-                response_comp = seq_comp.complement() + "\n"
+            elif "comp" == operation:
+                response_comp = user_seq.complement() + "\n"
 
                 html_operation = "<h1>Operation:</h1><p>Comp</p>"
                 html_result = "<h1>Result:</h1>" + "<p>" + response_comp + "</p>"
 
-            elif "rev" == op:
-                seq_rev = Seq(sequence)
-                response_rev = seq_rev.reverse() + "\n"
+            elif "rev" == operation:
+                response_rev = user_seq.reverse() + "\n"
 
                 html_operation = "<h1>Operation:</h1><p>Rev</p>"
                 html_result = "<h1>Result:</h1>" + "<p>" + response_rev + "</p>"
@@ -133,19 +149,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         else:
             file = "Error.html"
             contents = Path(file).read_text()
-            self.send_response(404)  # -- Status line: ERROR NOT FOUND
+            error = 404  # -- Status line: ERROR NOT FOUND
 
         self.send_response(error)
         # Generating the response message
         # Define the content-type header:
         self.send_header('Content-Type', 'text/html')
-        self.send_header('Content-Length', len(str.encode(contents)))
+        self.send_header('Content-Length', str(len(str.encode(contents))))
 
         # The header is finished
         self.end_headers()
 
         # Send the response message
-        self.wfile.write(str.encode(contents))
+        self.wfile.write(str.encode(str(contents)))
 
         return
 
