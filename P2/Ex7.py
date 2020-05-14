@@ -7,9 +7,9 @@ EXERCISE = 7
 print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 
 # -- Parameters server 1
-IP = "10.3.34.194"
-PORT1 = 8081
-PORT2 = 8082
+IP = "127.0.0.1"
+PORT1 = 8080
+PORT2 = 8081
 FOLDER = "../Session-04/"
 filename = FOLDER + 'FRAT1.txt'
 
@@ -17,31 +17,24 @@ s = Seq()
 s.read_fasta(filename)
 
 # Creating fragments
-fragment1 = "Fragment 1: "
-fragment2 = "Fragment 2: "
-fragment3 = "Fragment 3: "
-fragment4 = "Fragment 4: "
-fragment5 = "Fragment 5: "
-fragment6 = "Fragment 6: "
-fragment7 = "Fragment 7: "
-fragment8 = "Fragment 8: "
-fragment9 = "Fragment 9: "
-fragment10 = "Fragment 10: "
-fragments = [fragment1, fragment2, fragment3, fragment4, fragment5, fragment6,
-             fragment7, fragment8, fragment9, fragment10]
+fragments = []
+for fragment in range(1, 10):
+    fragments.append(f'Fragment {fragment}: ')
 
-i = 0
-f = 0
-while f < len(fragments):
+index_sequence = 0
+index_fragment = 0
+while index_fragment < len(fragments):
     sequence = str(s)
-    fragments[f] += sequence[i]
-    i += 1
-    if i % 10 == 0:
-        f += 1
+    fragments[index_fragment] += sequence[index_sequence]
+    index_sequence += 1
+    if index_sequence % 10 == 0:
+        index_fragment += 1
 
 # connect
 c1 = Client(IP, PORT1)
 c2 = Client(IP, PORT2)
+c1.talk('Sending FRAT1 Gene to the Server , in fragments of 10 bases...')
+c2.talk('Sending FRAT1 Gene to the Server , in fragments of 10 bases...')
 
 r = 0
 while r < len(fragments):

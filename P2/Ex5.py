@@ -7,8 +7,8 @@ EXERCISE = 5
 print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 
 # -- Parameters
-IP = "10.3.34.194"
-PORT = 8081
+IP = "127.0.0.1"
+PORT = 8080
 FOLDER = "../Session-04/"
 filename = FOLDER + 'U5.txt'
 s = Seq()

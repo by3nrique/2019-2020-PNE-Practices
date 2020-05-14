@@ -5,15 +5,15 @@ EXERCISE = 1
 
 print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 
-# -- Parameters of the server to talk to
-IP = "10.3.34.194"
+# SERVER
+IP = "127.0.0.1"
 PORT = 8080
 
-# -- Create a client object
+# Create client object with the Client0 class
 c = Client(IP, PORT)
 
-# -- Test the ping method
+# Test
 c.ping()
 
-# -- Print the IP and PORTs
+# Print the IP and PORTs
 print(f"IP: {c.ip}, {c.port}")
