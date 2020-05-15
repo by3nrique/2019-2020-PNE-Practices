@@ -68,12 +68,13 @@ def analyze_request(request_line):
             (parameter_name, value) = parameter_request.split("=")  # Split parameter and value for it
             list_parameters.append((parameter_name, value))  # append ("specie","mouse") and ("chromo",18)
 
+    elif ('&' and 'json=1') in request_line:  # Analyze if it is json request (Advanced service)
+        endpoint = request_line.split("&")[0]
+        list_parameters = []
+        JSON = True
     else:  # Simple request (no parameters) http:/localhost:8080/
         endpoint = request_line
         list_parameters = []
-
-    if "json=1" in request_line:  # Analyze if it is json request (Advanced service)
-        JSON = True
 
     # return endpoint , parameters and the JSON option
     return endpoint, list_parameters, JSON
@@ -237,7 +238,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                 # HTML response
                 else:
-                    contents_html = html_response(f'Karyotype {specie}', f'''<div style="height:350px;padding-left:12px;overflow:auto;">
+                    contents_html = html_response(f'Karyotype {specie}', f'''<div style="height:350px;padding-left
+:12px;overflow:auto;"> 
                                                             <lu>{karyotype_html}</lu>
                                                         </div>''')
 
@@ -318,7 +320,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 # JSON response
                 if JSON:
                     datastore = {'Gene': {
-                        gene: {'Gene id': gene_id, 'Chromosome': gene_location,
+                        gene: {'Gene id': gene_id, 'Chromosome': gene_location, 'Length': gene_length,
                                'Start': gene_start, 'End': gene_end}}}
                     contents_json = json.dumps(datastore)
 
@@ -373,7 +375,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 connection = ApiConnector('/overlap/region/human/', arguments=f'{chromosome}:{start}-{end}',
                                           feature=";feature=gene")
                 response_api, error_code = connection.api_response()
-
 
                 # Generate response
                 geneList = []
