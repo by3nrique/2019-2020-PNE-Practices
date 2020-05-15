@@ -68,13 +68,19 @@ def analyze_request(request_line):
             (parameter_name, value) = parameter_request.split("=")  # Split parameter and value for it
             list_parameters.append((parameter_name, value))  # append ("specie","mouse") and ("chromo",18)
 
-    elif ('&' and 'json=1') in request_line:  # Analyze if it is json request (Advanced service)
-        endpoint = request_line.split("&")[0]
-        list_parameters = []
-        JSON = True
+        if ('&' and 'json=1') in request_line:  # Analyze if it is json request (Advanced service)
+            JSON = True
+
     else:  # Simple request (no parameters) http:/localhost:8080/
-        endpoint = request_line
-        list_parameters = []
+        if ('&' and 'json=1') in request_line:  # Analyze if it is json request (Advanced service)
+            endpoint = request_line.split("&")[0]
+            list_parameters = []
+            JSON = True
+        else:
+            endpoint = request_line
+            list_parameters = []
+
+
 
     # return endpoint , parameters and the JSON option
     return endpoint, list_parameters, JSON

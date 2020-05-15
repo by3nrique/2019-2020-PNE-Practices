@@ -20,7 +20,7 @@ list_test_basic = ['http://localhost:8080/listSpecies', 'http://localhost:8080/l
                    'http://localhost:8080/chromosomeLength?specie=enrique&chromo=18',
                    'http://localhost:8080/chromosomeLength?specie=cat&chromo=X']
 
-list_test_medium = ['http://localhost:8080/geneSeq?gene=FRAT1',
+list_test_medium = list_test_basic + ['http://localhost:8080/geneSeq?gene=FRAT1',
                     'http://localhost:8080/geneSeq?gene=URJC1',
                     'http://localhost:8080/geneSeq?gene=GNG5', 'http://localhost:8080/geneInfo?gene=GNG5',
                     'http://localhost:8080/geneInfo?gene=URJC1', 'http://localhost:8080/geneCalc?gene=URJC11',
@@ -28,7 +28,7 @@ list_test_medium = ['http://localhost:8080/geneSeq?gene=FRAT1',
                     'http://localhost:8080/geneCalc?gene=GNG5',
                     'http://localhost:8080/geneList?chromo=1&start=0&end=30000',
                     'http://localhost:8080/geneList?chromo=1&start=29990&end=30000',
-                    'http://localhost:8080/geneList?chromo=4&start=0&end=30000'] + list_test_basic
+                    'http://localhost:8080/geneList?chromo=4&start=0&end=30000']
 
 # Create the JSON requests
 list_json = []
@@ -77,4 +77,3 @@ write_file(data_test_medium, 'test_medium.txt')
 # TEST MEDIUM
 data_test_advanced = test_maker(list_test_advanced, IP, PORT)
 write_file(data_test_advanced, 'test_advanced.txt')
-
