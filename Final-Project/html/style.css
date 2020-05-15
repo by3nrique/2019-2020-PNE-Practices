@@ -1,0 +1,27 @@
+
+html {
+    background-image: linear-gradient(to left bottom, #0f4c81, #006ea1, #0091b9, #00b4c9, #25d7d2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1vw;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+textarea{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1vw;
+}
+#wrapper {
+    background: whitesmoke;
+    border-radius: 2%;
+    padding: 1.5%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0 -50% 0 auto;
+    transform: translate(-50%, -50%);
+}

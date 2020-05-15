@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!!</title>
+    <style>
+
+    html {
+    background-image: linear-gradient(to left bottom, #0f4c81, #006ea1, #0091b9, #00b4c9, #25d7d2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1vw;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+
+    input[type=text]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      padding: 1%;
+      border: 1px solid grey;
+      width: 75%;
+      height: 10%;
+      border-radius: 4px;
+    }
+    input[type=submit]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      border: 2px #0F4C81;
+      padding: 1%;
+      height: 10%;
+      border-radius: 2%;
+    }
+
+
+    #wrapper {
+      background: whitesmoke;
+        border-radius: 2%;
+        padding: 1.5%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      margin: 0 -50% 0 auto;
+      transform: translate(-50%, -50%);
+    }
+    ul {
+      border-radius: 2%;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li a {
+      border-radius: 2%;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .active {
+      background-color: #0F4C81;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Browsing Human and vertebrates genome</h1>
+      <ul>
+        <li style="float:left;"><a class="active"href="/1"><h2>BASIC Level Services</h2></a></li>
+        <li style="float:right"><a href="/2"><h2>MEDIUM Level Services</h2></a></li>
+      </ul>
+      <form action="/listSpecies" method="get">
+        <p>1 - List of species in the genome database </p>
+          <input type="text" placeholder="Limit" name="limit">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+      <form action="/karyotype" method="get">
+        <p>2 - Information about the karyotype</p>
+          <input type="text" placeholder="Specie" name="specie">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+      <form action="/chromosomeLength" method="get">
+        <p>3- Chromosome Length</p>
+          <input type="text" placeholder="Specie" name="specie">
+
+          <input type="text" placeholder="Chromosome" name="chromo">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+
+    </div>
+  </body>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</html>
