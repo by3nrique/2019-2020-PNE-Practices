@@ -10,7 +10,8 @@ PORT = 8080
 # Details of the connection
 print(f'Connection to SERVER at {IP}:{PORT}')
 
-list_test_basic = ['http://localhost:8080/listSpecies', 'http://localhost:8080/listSpecies?limit=10',
+list_test_basic = ['http://localhost:8080/','http://localhost:8080/1','http://localhost:8080/2',
+    'http://localhost:8080/listSpecies', 'http://localhost:8080/listSpecies?limit=10',
                    'http://localhost:8080/listSpecies?limit=100',
                    'http://localhost:8080/karyotype?specie=mouse', 'http://localhost:8080/karyotype?specie=human',
                    'http://localhost:8080/chromosomeLength?specie=mouse&chromo=18',

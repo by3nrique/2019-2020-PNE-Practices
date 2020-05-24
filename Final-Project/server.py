@@ -171,14 +171,23 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             # /listSpecies /karyotype /chromosomeLength /geneSeq /geneInfo /geneCalc /geneList
 
             if endpoint == '/' or endpoint == '/1':
-                file = HTML + '1.html'  # 1.html is the form for BASIC services
-                contents_html = Path(file).read_text()  # Read the file
-                error_code = 200  # OK !
+                if JSON:
+                    contents_html, contents_json, error_code = response_error('Error',
+                                                                              f'JSON not valid in this endpoint "{endpoint}"')
+                else:
+                    file = HTML + '1.html'  # 1.html is the form for BASIC services
+                    contents_html = Path(file).read_text()  # Read the file
+                    error_code = 200  # OK !
+
 
             elif endpoint == '/2':
-                file = HTML + '2.html'  # 1.html is the form for MEDIUM services
-                contents_html = Path(file).read_text()  # Read the file
-                error_code = 200  # OK !
+                if JSON:
+                    contents_html, contents_json, error_code = response_error('Error',
+                                                                              f'JSON not valid in this endpoint "{endpoint}"')
+                else:
+                    file = HTML + '2.html'  # 1.html is the form for BASIC services
+                    contents_html = Path(file).read_text()  # Read the file
+                    error_code = 200  # OK !
 
             elif endpoint == '/listSpecies':
                 # Connection with Enssembl

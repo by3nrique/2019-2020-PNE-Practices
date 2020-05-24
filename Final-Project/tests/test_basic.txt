@@ -1,6 +1,340 @@
 Test report
 ============
 * TEST: 0
+* Input: http://localhost:8080/
+* Output: <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!!</title>
+    <style>
+
+    html {
+    background-image: linear-gradient(to left bottom, #0f4c81, #006ea1, #0091b9, #00b4c9, #25d7d2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1vw;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+
+    input[type=text]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      padding: 1%;
+      border: 1px solid grey;
+      width: 75%;
+      height: 10%;
+      border-radius: 4px;
+    }
+    input[type=submit]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      border: 2px #0F4C81;
+      padding: 1%;
+      height: 10%;
+      border-radius: 2%;
+    }
+
+
+    #wrapper {
+      background: whitesmoke;
+        border-radius: 2%;
+        padding: 1.5%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      margin: 0 -50% 0 auto;
+      transform: translate(-50%, -50%);
+    }
+    ul {
+      border-radius: 2%;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li a {
+      border-radius: 2%;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .active {
+      background-color: #0F4C81;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Browsing Human and vertebrates genome</h1>
+      <ul>
+        <li style="float:left;"><a class="active"href="/1"><h2>BASIC Level Services</h2></a></li>
+        <li style="float:right"><a href="/2"><h2>MEDIUM Level Services</h2></a></li>
+      </ul>
+      <form action="/listSpecies" method="get">
+        <p>1 - List of species in the genome database </p>
+          <input type="text" placeholder="Limit" name="limit">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+      <form action="/karyotype" method="get">
+        <p>2 - Information about the karyotype</p>
+          <input type="text" placeholder="Specie" name="specie">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+      <form action="/chromosomeLength" method="get">
+        <p>3- Chromosome Length</p>
+          <input type="text" placeholder="Specie" name="specie">
+
+          <input type="text" placeholder="Chromosome" name="chromo">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+
+    </div>
+  </body>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</html>
+
+* TEST: 1
+* Input: http://localhost:8080/1
+* Output: <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!!</title>
+    <style>
+
+    html {
+    background-image: linear-gradient(to left bottom, #0f4c81, #006ea1, #0091b9, #00b4c9, #25d7d2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1vw;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+
+    input[type=text]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      padding: 1%;
+      border: 1px solid grey;
+      width: 75%;
+      height: 10%;
+      border-radius: 4px;
+    }
+    input[type=submit]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      border: 2px #0F4C81;
+      padding: 1%;
+      height: 10%;
+      border-radius: 2%;
+    }
+
+
+    #wrapper {
+      background: whitesmoke;
+        border-radius: 2%;
+        padding: 1.5%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      margin: 0 -50% 0 auto;
+      transform: translate(-50%, -50%);
+    }
+    ul {
+      border-radius: 2%;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li a {
+      border-radius: 2%;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .active {
+      background-color: #0F4C81;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Browsing Human and vertebrates genome</h1>
+      <ul>
+        <li style="float:left;"><a class="active"href="/1"><h2>BASIC Level Services</h2></a></li>
+        <li style="float:right"><a href="/2"><h2>MEDIUM Level Services</h2></a></li>
+      </ul>
+      <form action="/listSpecies" method="get">
+        <p>1 - List of species in the genome database </p>
+          <input type="text" placeholder="Limit" name="limit">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+      <form action="/karyotype" method="get">
+        <p>2 - Information about the karyotype</p>
+          <input type="text" placeholder="Specie" name="specie">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+      <form action="/chromosomeLength" method="get">
+        <p>3- Chromosome Length</p>
+          <input type="text" placeholder="Specie" name="specie">
+
+          <input type="text" placeholder="Chromosome" name="chromo">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+      </form>
+
+    </div>
+  </body>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</html>
+
+* TEST: 2
+* Input: http://localhost:8080/2
+* Output: <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!!</title>
+    <style>
+
+    html {
+    background-image: linear-gradient(to left bottom, #0f4c81, #006ea1, #0091b9, #00b4c9, #25d7d2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1vw;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+
+    input[type=text]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      padding: 1%;
+      border: 1px solid grey;
+      width: 75%;
+      height: 10%;
+      border-radius: 4px;
+    }
+    input[type=submit]{
+      font-family: 'Roboto', sans-serif;
+      font-size: 1vw;
+      border: 2px #0F4C81;
+      padding: 1%;
+      height: 10%;
+      border-radius: 2%;
+    }
+
+
+    #wrapper {
+      background: whitesmoke;
+        border-radius: 2%;
+        padding: 1.5%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      margin: 0 -50% 0 auto;
+      transform: translate(-50%, -50%);
+    }
+    ul {
+      border-radius: 2%;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li a {
+      border-radius: 2%;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .active {
+      background-color: #0F4C81;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Browsing Human and vertebrates genome</h1>
+      <ul>
+        <li style="float:left;"><a href="/1"><h2>BASIC Level Services</h2></a></li>
+        <li style="float:right"><a class="active" href="/2"><h2>MEDIUM Level Services</h2></a></li>
+      </ul>
+      <form action="/geneSeq" method="get">
+          <p>4 - Return the sequence of given human gene</p>
+          <input type="text" placeholder="Gene" name="gene">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+        <br><br>
+      </form>
+      <form action="/geneInfo" method="get">
+          <p>5 - Return information about a human gene</p>
+        <input type="text" placeholder="Gene" name="gene">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+        <br><br>
+      </form>
+      <form action="/geneCalc" method="get">
+          <p>6 - Gene calculations </p>
+        <input type="text" placeholder="Gene" name="gene">
+          JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+        <br><br>
+      </form>
+      <form action="/geneList" method="get">
+          <p>7 - Find genes </p>
+        <input type="text" placeholder="Chromosome" name="chromo"><br>
+        <input type="text" placeholder="Start" name="start"><br>
+        <input type="text" placeholder="End" name="end">
+        JSON <input type="checkbox" value="1" name="json">
+        <input type="submit" value="GO!"/>
+        <br><br>
+      </form>
+
+    </div>
+  </body>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</html>
+
+* TEST: 3
 * Input: http://localhost:8080/listSpecies
 * Output: 
         <!DOCTYPE html>
@@ -52,7 +386,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 1
+* TEST: 4
 * Input: http://localhost:8080/listSpecies?limit=10
 * Output: 
         <!DOCTYPE html>
@@ -104,7 +438,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 2
+* TEST: 5
 * Input: http://localhost:8080/listSpecies?limit=100
 * Output: 
         <!DOCTYPE html>
@@ -148,7 +482,7 @@ textarea{
               <h1>Browsing Human and vertebrates genome</h1>
               <h2>Results : List of 100 species</h2>
               <p><div style="height:350px;padding-left:12px;overflow:auto;">
-                                                            <lu><li>Mainland tiger snake</li><li>Chilean tinamou</li><li>Red fox</li><li>Sperm whale</li><li>Great spotted kiwi</li><li>Pinecone soldierfish</li><li>Greater bamboo lemur</li><li>Kakapo</li><li>Lamprey</li><li>Gouldian finch</li><li>Electric eel</li><li>Okarito brown kiwi</li><li>Large yellow croaker</li><li>Channel bull blenny</li><li>Mouse NZO/HlLtJ</li><li>Zebrafish</li><li>Common carp huanghe</li><li>Mouse A/J</li><li>Pig - Wuzhishan</li><li>Horned golden-line barbel</li><li>Tree Shrew</li><li>Marmoset</li><li>Spotted gar</li><li>Tiger</li><li>Goat</li><li>Central bearded dragon</li><li>Naked mole-rat female</li><li>American black bear</li><li>Tetraodon</li><li>Meerkat</li><li>Steppe mouse</li><li>Lyretail cichlid</li><li>Mangrove rivulus</li><li>Gorilla</li><li>Sheep</li><li>Bicolor damselfish</li><li>Coelacanth</li><li>Midas cichlid</li><li>Ma's night monkey</li><li>Pachon cavefish</li><li>Common wombat</li><li>Blue-ringed sea krait</li><li>Gilthead seabream</li><li>Indian peafowl</li><li>Pig-tailed macaque</li><li>American beaver</li><li>Pig - Jinhua</li><li>Duck</li><li>Shrew mouse</li><li>Western mosquitofish</li><li>Agassiz's desert tortoise</li><li>Helmeted guineafowl</li><li>Amazon molly</li><li>Chinese hamster CHOK1GS</li><li>Orangutan</li><li>Olive baboon</li><li>Orbiculate cardinalfish</li><li>Zebra mbuna</li><li>Elephant</li><li>American mink</li><li>Guinea Pig</li><li>Platypus</li><li>Capuchin</li><li>Golden-collared manakin</li><li>Three-toed box turtle</li><li>Prairie vole</li><li>Tropical clawed frog</li><li>Common carp</li><li>Blue tilapia</li><li>Flycatcher</li><li>Pig - Bamei</li><li>Spoon-billed sandpiper</li><li>African ostrich</li><li>Periophthalmus magnuspinnatus</li><li>Chinese softshell turtle</li><li>Asiatic black bear</li><li>Reedfish</li><li>Tarsier</li><li>Clown anemonefish</li><li>Huchen</li><li>Horse</li><li>Pig - Landrace</li><li>Chinese hamster PICR</li><li>Mouse</li><li>Mexican tetra</li><li>Lesser hedgehog tenrec</li><li>Jewelled blenny</li><li>Tongue sole</li><li>Mouse 129S1/SvImJ</li><li>Leopard</li><li>Live sharksucker</li><li>Great Tit</li><li>Northern pike</li><li>Yellowtail amberjack</li><li>Ruff</li><li>Alpaca</li><li>Mouse Lemur</li><li>Ugandan red Colobus</li><li>Human</li><li>Mouse BALB/cJ</li></lu>
+                                                            <lu><li>Pig - Rongchang</li><li>Pika</li><li>African ostrich</li><li>Nile tilapia</li><li>Channel catfish</li><li>West African mud turtle</li><li>Channel bull blenny</li><li>Sooty mangabey</li><li>Dolphin</li><li>Naked mole-rat male</li><li>Brown trout</li><li>Eastern brown snake</li><li>Mouse CAST/EiJ</li><li>Spiny chromis</li><li>Gorilla</li><li>Silver-eye</li><li>Sloth</li><li>Eurasian sparrowhawk</li><li>Mouse AKR/J</li><li>Sailfin molly</li><li>Greater bamboo lemur</li><li>Mangrove rivulus</li><li>Platypus</li><li>Live sharksucker</li><li>Megabat</li><li>Mouse NOD/ShiLtJ</li><li>Ferret</li><li>Coelacanth</li><li>Lion</li><li>Siamese fighting fish</li><li>Pig - Wuzhishan</li><li>Brazilian guinea pig</li><li>Sheepshead minnow</li><li>Beluga whale</li><li>Domestic yak</li><li>Orbiculate cardinalfish</li><li>Chinese hamster CHOK1GS</li><li>Kakapo</li><li>Orangutan</li><li>Daurian ground squirrel</li><li>Pig - Bamei</li><li>Mouse BALB/cJ</li><li>Common carp huanghe</li><li>Three-toed box turtle</li><li>Tongue sole</li><li>Chimpanzee</li><li>Ma's night monkey</li><li>Red-bellied piranha</li><li>Pig - Tibetan</li><li>Drill</li><li>Anole lizard</li><li>Duck</li><li>Common carp german mirror</li><li>Chilean tinamou</li><li>Marmoset</li><li>Chinese medaka</li><li>Greater amberjack</li><li>Mouse</li><li>Dark-eyed junco</li><li>Mouse DBA/2J</li><li>Arctic ground squirrel</li><li>Pig</li><li>Mallard</li><li>Dog - Great Dane</li><li>Great Tit</li><li>Pig - Pietrain</li><li>Mainland tiger snake</li><li>Pig - Jinhua</li><li>Lesser hedgehog tenrec</li><li>Climbing perch</li><li>Tuatara</li><li>Wild yak</li><li>Bushbaby</li><li>Degu</li><li>Siberian musk deer</li><li>Northern pike</li><li>Pig - Meishan</li><li>Gilthead seabream</li><li>Kangaroo rat</li><li>Ring-necked pheasant</li><li>Mummichog</li><li>American mink</li><li>Tasmanian devil</li><li>Horned golden-line barbel</li><li>Shrew mouse</li><li>Golden Hamster</li><li>Pachon cavefish</li><li>Mouse PWK/PhJ</li><li>Hybrid - Bos Taurus</li><li>Canada lynx</li><li>Wallaby</li><li>Argentine black and white tegu</li><li>Monterrey platyfish</li><li>Blue tit</li><li>Japanese quail</li><li>Microbat</li><li>Panda</li><li>Chinook salmon</li><li>Hedgehog</li><li>Ryukyu mouse</li></lu>
                                                         </div></p>
               <a style="float:left;" href="/1"><h3>BASIC SERVICES</h2></a><a style="float:right;"href="/2"><h3>MEDIUM 
 SERVICES</h2></a> 
@@ -156,7 +490,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 3
+* TEST: 6
 * Input: http://localhost:8080/karyotype?specie=mouse
 * Output: 
         <!DOCTYPE html>
@@ -209,7 +543,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 4
+* TEST: 7
 * Input: http://localhost:8080/karyotype?specie=human
 * Output: 
         <!DOCTYPE html>
@@ -262,7 +596,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 5
+* TEST: 8
 * Input: http://localhost:8080/chromosomeLength?specie=mouse&chromo=18
 * Output: 
         <!DOCTYPE html>
@@ -316,7 +650,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 6
+* TEST: 9
 * Input: http://localhost:8080/chromosomeLength?specie=enrique&chromo=X
 * Output: 
         <!DOCTYPE html>
@@ -366,7 +700,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 7
+* TEST: 10
 * Input: http://localhost:8080/listSpecies?limit=URJC
 * Output: 
         <!DOCTYPE html>
@@ -418,7 +752,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 8
+* TEST: 11
 * Input: http://localhost:8080/karyotype?specie=cat
 * Output: 
         <!DOCTYPE html>
@@ -471,7 +805,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 9
+* TEST: 12
 * Input: http://localhost:8080/karyotype?specie=dog
 * Output: 
         <!DOCTYPE html>
@@ -524,7 +858,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 10
+* TEST: 13
 * Input: http://localhost:8080/chromosomeLength?specie=enrique&chromo=18
 * Output: 
         <!DOCTYPE html>
@@ -574,7 +908,7 @@ SERVICES</h2></a>
           </body>
         </html>
         
-* TEST: 11
+* TEST: 14
 * Input: http://localhost:8080/chromosomeLength?specie=cat&chromo=X
 * Output: 
         <!DOCTYPE html>
