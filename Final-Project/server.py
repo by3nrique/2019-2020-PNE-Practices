@@ -80,8 +80,6 @@ def analyze_request(request_line):
             endpoint = request_line
             list_parameters = []
 
-
-
     # return endpoint , parameters and the JSON option
     return endpoint, list_parameters, JSON
 
@@ -172,18 +170,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             if endpoint == '/' or endpoint == '/1':
                 if JSON:
-                    contents_html, contents_json, error_code = response_error('Error',
-                                                                              f'JSON not valid in this endpoint "{endpoint}"')
+                    contents_html, contents_json, error_code = \
+                        response_error('Error', f'JSON not valid in this endpoint "{endpoint}"')
                 else:
                     file = HTML + '1.html'  # 1.html is the form for BASIC services
                     contents_html = Path(file).read_text()  # Read the file
                     error_code = 200  # OK !
 
-
             elif endpoint == '/2':
                 if JSON:
-                    contents_html, contents_json, error_code = response_error('Error',
-                                                                              f'JSON not valid in this endpoint "{endpoint}"')
+                    contents_html, contents_json, error_code = \
+                        response_error('Error', f'JSON not valid in this endpoint "{endpoint}"')
                 else:
                     file = HTML + '2.html'  # 1.html is the form for BASIC services
                     contents_html = Path(file).read_text()  # Read the file
